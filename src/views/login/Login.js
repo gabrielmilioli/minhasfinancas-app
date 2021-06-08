@@ -17,34 +17,37 @@ class Login extends React.Component {
       e.stopPropagation();
     }
 
-    this.setState({valido: true});
+    this.setState({ valido: true });
   };
 
   onChangeEmail = (e) => {
-    this.setState({email: e.target.value});
+    this.setState({ email: e.target.value });
   };
 
   render() {
     return (
-      <Card style={{ margin: 'auto', maxWidth: '80%' }}>
+      <Card style={{ margin: 'auto', maxWidth: '450px' }}>
         <Card.Header as="h5">Login</Card.Header>
         <Card.Body>
-          <Form noValidate validated={this.state.valido}>
-            <Form.Group as={Row} controlId="fgEmail">
-              <Form.Label column sm="2">E-mail</Form.Label>
-              <Col sm="10">
-                <Form.Control type="email" placeholder="Digite seu e-mail" 
-                  onChange={this.onChangeEmail} required/>
-              </Col>
+          <Form.Row noValidate validated={this.state.valido}>
+            <Form.Group as={Col} controlId="fgEmail">
+              <Form.Label>E-mail</Form.Label>
+              <Form.Control type="email" placeholder="Digite seu e-mail"
+                onChange={this.onChangeEmail} required />
+              <Form.Control.Feedback type="invalid">
+                Informe um e-mail válido.
+              </Form.Control.Feedback>
             </Form.Group>
-
-            <Form.Group as={Row} controlId="fgSenha">
-              <Form.Label column sm="2">Senha</Form.Label>
-              <Col sm="10">
-                <Form.Control type="password" placeholder="Digite sua senha" required/>
-              </Col>
+          </Form.Row>
+          <Form.Row noValidate validated={this.state.valido}>
+            <Form.Group as={Col} controlId="fgSenha">
+              <Form.Label>Senha</Form.Label>
+              <Form.Control type="password" placeholder="Digite sua senha" required />
+              <Form.Control.Feedback type="invalid">
+                Informe uma senha válida.
+              </Form.Control.Feedback>
             </Form.Group>
-          </Form>
+          </Form.Row>
         </Card.Body>
         <Card.Footer>
           <Button variant="primary" onClick={this.handleSubmit}>Entrar</Button>
