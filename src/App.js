@@ -1,15 +1,19 @@
 import './App.css';
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Login from './views/login/Login';
+import Rotas from './Rotas';
+import MenuSuperior from './layout/MenuSuperior';
 
 class App extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <Login />
-      </Container>
+      <>
+        <MenuSuperior />
+        <Container fluid>
+          <Rotas />
+        </Container>
+      </>
     )
   }
 
