@@ -1,8 +1,16 @@
 import React from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import UsuarioService from '../../services/UsuarioService';
+import StorageUtils from '../../utils/StorageUtils';
+import NotificationUtils from '../../utils/NotificationUtils';
 
 class CriarConta extends React.Component {
+
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+  }
 
   state = {
     nome: '',
@@ -24,6 +32,21 @@ class CriarConta extends React.Component {
     }
 
     this.setState({ valido: true });
+
+    const usuario = {
+      nome: this.state.nome,
+      email: this.state.email,
+      senha: this.state.senha
+    };
+
+    this.service.salvar(usuario)
+      .then(response => {
+        StorageUtils.setUsuario(response.data);
+        this.props.history.push('/inicio');
+      }).catch(error => {
+        NotificationUtils.show('error', error.response.data);
+        this.setState({ valido: false });
+      });
   };
 
   voltar = () => {
@@ -73,7 +96,7 @@ class CriarConta extends React.Component {
             </Form.Group>
             <Form.Group controlId="fgSenha">
               <Form.Label>Senha</Form.Label>
-              <Form.Control type="password" placeholder="Digite sua senha" 
+              <Form.Control type="password" placeholder="Digite sua senha"
                 onChange={this.onChangeSenha} required />
               <Form.Control.Feedback type="invalid">
                 Informe uma senha válida.
@@ -81,7 +104,7 @@ class CriarConta extends React.Component {
             </Form.Group>
             <Form.Group controlId="fgRepeteSenha">
               <Form.Label>Repita sua senha</Form.Label>
-              <Form.Control type="password" placeholder="Digite novamente sua senha" 
+              <Form.Control type="password" placeholder="Digite novamente sua senha"
                 onChange={this.onChangeSenhaRepetida} required isInvalid={this.state.senhaInconsistente} />
               <Form.Control.Feedback type="invalid">
                 Repita sua senha.

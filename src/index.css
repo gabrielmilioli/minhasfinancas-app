@@ -15,3 +15,7 @@ code {
 .float-right {
   float: right;
 }
+
+.container-fluid {
+  max-width: 85rem;
+}

@@ -8,7 +8,7 @@ function Rotas() {
   return (
     <HashRouter>
       <Switch>
-        <Route path="/" component={Inicio}/>
+        <Route path="/inicio" component={Inicio}/>
         <Route path="/login" component={Login}/>
         <Route path="/criar-conta" component={CriarConta}/>
       </Switch>
