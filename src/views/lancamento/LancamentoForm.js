@@ -36,26 +36,28 @@ class LancamentoForm extends React.Component {
     formInvalido: false
   };
 
-  static getDerivedStateFromProps (props, state) {
-    if (props.show !== state.show) {
-      return { show: props.show };
+  componentWillReceiveProps(props) {
+    if (props.show !== this.state.show) {
+      this.setState({ show: props.show });
+      if (!props.show) {
+        return;
+      }
     }
 
-    if (props.item !== state.item) {
+    if (props.item !== this.state.item) {
       const item = props.item || {};
-      return {
+      this.setState({
         item: item || {},
         editando: !!item.id,
         title: (!!item.id ? 'Editando' : 'Adicionando') + ' lançamento'
-      };
+      });
     }
-    
-    return null;
   }
 
   salvar = () => {
     const item = this.state.item;
     item.usuario = this.usuarioLogado.id;
+    item.valor = parseFloat(item.valor.replace(/\,/g, '.')).toFixed(2);
 
     if (!this.service.validar(item)) {
       this.setState({ formInvalido: true });
@@ -104,7 +106,7 @@ class LancamentoForm extends React.Component {
   onChangeCampo = (e) => {
     let value = e.target.value;
     const name = e.target.name;
-    const item = this.state.item || {};
+    let item = this.state.item || {};
     item[name] = value;
     this.setState({ item: item });
   };
@@ -162,8 +164,8 @@ class LancamentoForm extends React.Component {
                     <InputGroup.Prepend>
                       <InputGroup.Text>R$</InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control type="text" placeholder="Valor" name="valor"
-                      pattern="[+-]?\d+(?:[.,]\d+)?"
+                    <Form.Control type="number" placeholder="Valor" name="valor"
+                      step=".01"
                       className="text-right"
                       onChange={this.onChangeCampo}
                       value={this.state.item.valor}

@@ -12,37 +12,29 @@ class Select extends React.Component {
     this.values = props.values;
     this.name = props.name;
 
-    if (this.required && !this.value && this.values) {
-      const first = this.values[0];
-      this.change(first.value);
-    }
-  }
-
-  static getDerivedStateFromProps (props, state) {
-    if (props.value !== state.value) {
-      state.change(props.value);
-    }
-
-    return null;
-  }
-
-  clear = () => {
-    this.change('');
-  };
-
-  change = (newValue) => {
-    this.setState({ value: newValue });
-    if (this.onChange) {
+    if (this.required) {
       this.onChange({
-        target: { value: newValue, name: this.name }
+        target: { value: this.values[0].value, name: this.name }
       });
     }
   }
 
   state = {
-    value: this.value,
-    change: this.change
+    value: this.value
   };
+
+  clear = () => {
+    this.change('');
+  };
+
+  change = (e) => {
+    this.setState({ value: e.target.value });
+    if (this.onChange) {
+      this.onChange({
+        target: { value: e.target.value, name: this.name }
+      });
+    }
+  }
 
   render() {
     return (
