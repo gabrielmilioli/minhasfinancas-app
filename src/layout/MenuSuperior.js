@@ -5,7 +5,7 @@ class MenuSuperior extends React.Component {
 
   render() {
     return (
-      <Navbar bg="primary" variant="dark">
+      <Navbar variant="dark" className="primary">
         <Navbar.Brand href="#inicio">Minhas finanças</Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link href="#inicio">Início</Nav.Link>

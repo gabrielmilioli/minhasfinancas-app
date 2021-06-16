@@ -18,6 +18,7 @@ class CriarConta extends React.Component {
     senha: '',
     senhaRepetida: '',
     valido: false,
+    emailInvalido: false,
     senhaInconsistente: false
   };
 
@@ -29,6 +30,7 @@ class CriarConta extends React.Component {
       }
       e.preventDefault();
       e.stopPropagation();
+      return;
     }
 
     this.setState({ valido: true });
@@ -44,7 +46,7 @@ class CriarConta extends React.Component {
         StorageUtils.setUsuario(response.data);
         this.props.history.push('/inicio');
       }).catch(error => {
-        NotificationUtils.show('error', error.response.data);
+        NotificationUtils.show('error', error);
         this.setState({ valido: false });
       });
   };
@@ -59,6 +61,13 @@ class CriarConta extends React.Component {
 
   onChangeEmail = (e) => {
     this.setState({ email: e.target.value });
+    
+    if (!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)) {
+      this.setState({ emailInvalido: true });
+      return;
+    }
+
+    this.setState({ emailInvalido: false });
   };
 
   onChangeSenha = (e) => {
@@ -93,6 +102,11 @@ class CriarConta extends React.Component {
               <Form.Control.Feedback type="invalid">
                 Informe um e-mail válido.
               </Form.Control.Feedback>
+              {(this.state.emailInvalido && this.state.valido) && 
+              <Form.Control.Feedback type="invalid">
+                Informe um e-mail válido.
+              </Form.Control.Feedback>
+              }
             </Form.Group>
             <Form.Group controlId="fgSenha">
               <Form.Label>Senha</Form.Label>

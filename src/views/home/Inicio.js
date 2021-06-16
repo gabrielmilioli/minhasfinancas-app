@@ -3,6 +3,7 @@ import { Jumbotron, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import UsuarioService from '../../services/UsuarioService';
 import StorageUtils from '../../utils/StorageUtils';
+import NumberUtils from '../../utils/NumberUtils';
 
 class Inicio extends React.Component {
   
@@ -23,7 +24,7 @@ class Inicio extends React.Component {
 
     this.service.saldo(this.state.usuario.id)
     .then(response => {
-      this.setState({ saldo: Number.parseFloat(response.data).toFixed(2) });
+      this.setState({ saldo: NumberUtils.format(response.data) });
     }).catch(error => {
       console.log(error);
     });

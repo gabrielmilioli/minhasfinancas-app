@@ -19,6 +19,10 @@ class ApiService {
     return HTTP_CLIENT.get(this.requestUrl(path));
   }
 
+  get(path, params) {
+    return HTTP_CLIENT.get(this.requestUrl(path), { params: params });
+  }
+
   post(path, params) {
     return HTTP_CLIENT.post(this.requestUrl(path), params);
   }

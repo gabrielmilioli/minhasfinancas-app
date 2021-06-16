@@ -39,7 +39,7 @@ class Login extends React.Component {
       StorageUtils.setUsuario(response.data);
       this.props.history.push('/inicio');
     }).catch(error => {
-      NotificationUtils.show('error', error.response.data);
+      NotificationUtils.show('error', error);
       this.setState({ erroLogin: true, msgErroLogin: error.response.data });
     });
   };

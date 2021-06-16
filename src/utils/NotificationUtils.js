@@ -5,6 +5,17 @@ toast.configure();
 
 class NotificationUtils {
 
+  static trataMsgErro(error) {
+    if (error.response && error.response.data) {
+      if (error.response.data.message) {
+        console.log(error.response.data.message);
+        return error.message;
+      }
+      return error.response.data;
+    }
+    return error;
+  }
+
   static show(type, message) {
     var options = {
       autoClose: 5000,
@@ -29,7 +40,7 @@ class NotificationUtils {
         break;
       case 'error':
         options.type = toast.TYPE.ERROR;
-        toast.error(message, options);
+        toast.error(this.trataMsgErro(message), options);
         break;
       default:
         break;

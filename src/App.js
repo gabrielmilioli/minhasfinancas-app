@@ -10,7 +10,7 @@ class App extends React.Component {
     return (
       <>
         <MenuSuperior />
-        <Container fluid>
+        <Container fluid className="main-container">
           <Rotas />
         </Container>
       </>
