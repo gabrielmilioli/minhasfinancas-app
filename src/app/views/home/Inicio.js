@@ -2,32 +2,34 @@ import React from 'react';
 import { Jumbotron, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import UsuarioService from '../../services/UsuarioService';
-import StorageUtils from '../../utils/StorageUtils';
 import NumberUtils from '../../utils/NumberUtils';
+import { ContextoAutenticacao } from '../../../main/ProvedorAutenticacao';
+import NotificationUtils from '../../utils/NotificationUtils';
 
 class Inicio extends React.Component {
-  
+
   constructor() {
     super();
     this.service = new UsuarioService();
   }
 
   state = {
-    usuario: StorageUtils.getUsuario(),
     saldo: 0
   };
 
   componentDidMount() {
-    if (!this.state.usuario) {
+    const usuarioAutenticado = this.context.usuarioAutenticado;
+
+    if (!usuarioAutenticado) {
       return;
     }
 
-    this.service.saldo(this.state.usuario.id)
-    .then(response => {
-      this.setState({ saldo: NumberUtils.format(response.data) });
-    }).catch(error => {
-      console.log(error);
-    });
+    this.service.saldo(usuarioAutenticado.id)
+      .then(response => {
+        this.setState({ saldo: NumberUtils.format(response.data) });
+      }).catch(error => {
+        NotificationUtils.show('error', error);
+      });
   };
 
   cadastrarUsuario = () => {
@@ -41,7 +43,7 @@ class Inicio extends React.Component {
   render() {
     return (
       <Jumbotron>
-        <h1>Bem-vindo, {this.state.usuario.nome}!</h1>
+        <h1>Bem-vindo!</h1>
         <p className="lead">Seu saldo para o mês atual é de <strong>R$ {this.state.saldo}</strong></p>
         <hr />
         <p>
@@ -56,5 +58,7 @@ class Inicio extends React.Component {
   }
 
 }
+
+Inicio.contextType = ContextoAutenticacao;
 
 export default withRouter(Inicio);

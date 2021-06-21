@@ -7,6 +7,9 @@ class StorageUtils {
   static _setItem(chave, item) {
     localStorage.setItem(chave, JSON.stringify(item));
   };
+  static _removeItem(chave, item) {
+    localStorage.removeItem(chave);
+  };
 
   /* INCLUIR MÉTODOS DE GET E/OU SET ABAIXO */
   static getUsuario() {
@@ -14,6 +17,9 @@ class StorageUtils {
   };
   static setUsuario(item) {
     this._setItem('usuario', item);
+  };
+  static removeUsuario() {
+    this._removeItem('usuario');
   };
 
 }

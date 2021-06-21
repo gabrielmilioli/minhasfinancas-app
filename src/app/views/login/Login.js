@@ -2,8 +2,8 @@ import React from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import UsuarioService from '../../services/UsuarioService';
-import StorageUtils from '../../utils/StorageUtils';
 import NotificationUtils from '../../utils/NotificationUtils';
+import { ContextoAutenticacao } from '../../../main/ProvedorAutenticacao';
 
 class Login extends React.Component {
 
@@ -21,7 +21,6 @@ class Login extends React.Component {
   };
 
   entrar = (e) => {
-    console.log(Notification.showNotification);
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -36,7 +35,7 @@ class Login extends React.Component {
       email: this.state.email,
       senha: this.state.senha
     }).then(response => {
-      StorageUtils.setUsuario(response.data);
+      this.context.iniciarSessao(response.data);
       this.props.history.push('/inicio');
     }).catch(error => {
       NotificationUtils.show('error', error);
@@ -95,5 +94,7 @@ class Login extends React.Component {
   }
 
 }
+
+Login.contextType = ContextoAutenticacao;
 
 export default withRouter(Login);
