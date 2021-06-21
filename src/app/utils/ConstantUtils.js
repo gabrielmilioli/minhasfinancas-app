@@ -1,5 +1,6 @@
 const ConstantUtils = {
-  API_ROOT: 'http://localhost:8080/api',
+  // API_ROOT: 'http://localhost:8080/api',
+  API_ROOT: 'https://milioli-minhasfinancas-api.herokuapp.com/api',
   MESES: [
     { value: 1, description: 'Janeiro' },
     { value: 2, description: 'Fevereiro' },
