@@ -57,12 +57,13 @@ class LancamentoForm extends React.Component {
   salvar = () => {
     const item = this.state.item;
     item.usuario = this.usuarioLogado.id;
-    item.valor = parseFloat(item.valor.replace(/\,/g, '.')).toFixed(2);
-
+    
     if (!this.service.validar(item)) {
       this.setState({ formInvalido: true });
       return;
     }
+
+    item.valor = parseFloat(item.valor.replace(/\,/g, '.')).toFixed(2);
 
     this.setState({ formInvalido: false });
 
